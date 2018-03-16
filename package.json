@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "API feita com node.js, typescript, express e mongoDB",
   "main": "dist/App.js",
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
     "start": "nodemon dist/index.js",
     "test": "gulp"
