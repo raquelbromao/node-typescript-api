@@ -115,7 +115,7 @@ class UsuarioController {
 
   //}
 
-  public validateToken(req: Request, res: Response): boolean {
+  public validateToken(req: Request, res: Response): string {
     const login_aux: string = req.params.login;
     const senha_aux: string = req.params.senha;
     let isValid: boolean = false;
@@ -135,7 +135,7 @@ class UsuarioController {
     //return isValid;
 
     res.json(req.params);
-    return true;
+    return 'retorno teste';
   }
 }
 
