@@ -117,6 +117,7 @@ class UsuarioController {
         //console.log('Entrou e deu -> ' + isValid);
         //return isValid;
         res.json(req.params);
+        return true;
     }
 }
 const usuarioController = new UsuarioController();
