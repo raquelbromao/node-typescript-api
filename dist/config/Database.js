@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 class Database {
     constructor() {
-        this.DB_URI = 'mongodb://localhost/node-ts-api';
+        //private DB_URI = 'mongodb://localhost/node-ts-api';
+        this.DB_URI = 'mongodb://raquelromao:datacamp001@ds117749.mlab.com:17749/apidatacamp';
     }
     createConnection() {
         mongoose.connect(this.DB_URI);

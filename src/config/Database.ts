@@ -1,7 +1,9 @@
 import * as mongoose from 'mongoose';
 
 class Database {
-    private DB_URI = 'mongodb://localhost/node-ts-api';
+    //private DB_URI = 'mongodb://localhost/node-ts-api';
+    private DB_URI = 'mongodb://raquelromao:datacamp001@ds117749.mlab.com:17749/apidatacamp';
+
     private DB_CONNECTION;
 
     constructor() {}

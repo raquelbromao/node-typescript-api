@@ -110,17 +110,7 @@ class UsuarioController {
             isValid = bcrypt.compareSync(senha_aux, senha);
             console.log(isValid);
         }));
-        console.log(isValid);
-        /*
-        .then (data => {
-          const status = res.statusCode;
-          res.json({ status, data});
-          //console.log("Usuário de login " + login + " foi deletado!");
-        }).catch (err => {
-          const status = res.statusCode;
-          res.json({ status, err });
-        });*/
-        //res.json(user_senha);
+        return isValid;
     }
 }
 const usuarioController = new UsuarioController();
