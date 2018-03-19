@@ -116,8 +116,8 @@ class UsuarioController {
   //}
 
   public validateToken(req: Request, res: Response): void {
-   // const login_aux: string = req.params.login;
-    //const senha_aux: string = req.params.senha;
+    const login_aux: string = req.params.login;
+    const senha_aux: string = req.params.senha;
     let isValid: boolean = false;
 
     /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
@@ -133,6 +133,8 @@ class UsuarioController {
     //res.json(req.body);
     //console.log('Entrou e deu -> ' + isValid);
     //return isValid;
+
+    res.json(req.params);
   }
 }
 
