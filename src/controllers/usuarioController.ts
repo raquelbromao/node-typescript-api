@@ -129,7 +129,7 @@ class UsuarioController {
 
     console.log(req.params.login);
     console.log(req.params.senha);
-    console.log(req.body);
+    //console.log(req.body);
     //res.json(req.body);
     //console.log('Entrou e deu -> ' + isValid);
     //return isValid;
