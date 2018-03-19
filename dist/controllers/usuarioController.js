@@ -98,18 +98,21 @@ class UsuarioController {
             res.json({ status, err });
         });
     }
-    //public validateLogin(req: Request, res: Response): {
-    //}
     validateToken(req, res) {
         const login_aux = req.params.login;
         const senha_aux = req.params.senha;
         let isValid = false;
-        /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-              console.log(res.get('senha'));
-              let senha =  res.get('senha');
-              isValid = bcrypt.compareSync(senha_aux, senha);
-              console.log(isValid);
-        }));*/
+        usuarioSchema_1.default.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+            if (err) {
+                console.log('ERRO BD: ' + err);
+            }
+            else {
+                //console.log(res.get('senha'));
+                let senha = res.get('senha');
+                isValid = bcrypt.compareSync(senha_aux, senha);
+                console.log('A senha informada é válida? -> ' + isValid);
+            }
+        }));
         console.log(req.params.login);
         console.log(req.params.senha);
         console.log(req.params);
@@ -118,7 +121,7 @@ class UsuarioController {
         //console.log('Entrou e deu -> ' + isValid);
         //return isValid;
         //res.json(req.params);
-        return 'retorno teste';
+        return;
     }
 }
 const usuarioController = new UsuarioController();

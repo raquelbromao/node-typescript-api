@@ -111,21 +111,21 @@ class UsuarioController {
       });
   }
 
-  //public validateLogin(req: Request, res: Response): {
-
-  //}
-
-  public validateToken(req: Request, res: Response): string {
+  public validateToken(req: Request, res: Response): void {
     const login_aux: string = req.params.login;
     const senha_aux: string = req.params.senha;
     let isValid: boolean = false;
 
-    /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-          console.log(res.get('senha'));
+    usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+        if(err) {
+          console.log('ERRO BD: '+err);
+        } else {
+          //console.log(res.get('senha'));
           let senha =  res.get('senha');
           isValid = bcrypt.compareSync(senha_aux, senha);
-          console.log(isValid);
-    }));*/
+          console.log('A senha informada é válida? -> ' + isValid);
+        }  
+    }));
 
     console.log(req.params.login);
     console.log(req.params.senha);
@@ -136,7 +136,7 @@ class UsuarioController {
     //return isValid;
 
     //res.json(req.params);
-    return 'retorno teste';
+    return;
   }
 }
 
