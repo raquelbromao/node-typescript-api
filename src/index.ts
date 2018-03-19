@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as debug from 'debug';
 import App from './App';
 
-const port = 3000;
+const port = (process.env.PORT || 3000);
 App.set('port',port);
 
 //  Cria o servidor e passa a api pra ele

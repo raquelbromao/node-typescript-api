@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = require("http");
 const App_1 = require("./App");
-const port = 3000;
+const port = (process.env.PORT || 3000);
 App_1.default.set('port', port);
 //  Cria o servidor e passa a api pra ele
 const server = http.createServer(App_1.default);
