@@ -4,7 +4,8 @@
   "description": "API feita com node.js, typescript, express e mongoDB",
   "main": "dist/App.js",
   "engines": {
-    "node": "6.11.1"
+    "node": "6.11.1",
+    "npm": "3.10.10"
   },
   "scripts": {
     "start": "node dist/index.js",
