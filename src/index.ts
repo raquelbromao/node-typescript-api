@@ -15,5 +15,5 @@ server.on('listening', onListening);
  */
 function onListening(): void {
     let address = server.address();
-    console.log('Ouvindo na porta: ' + port + ' || address: ' + address);
+    //console.log('Ouvindo na porta: ' + port + ' || address: ' + address);
 }
