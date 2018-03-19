@@ -104,14 +104,17 @@ class UsuarioController {
         const login_aux = req.params.login;
         const senha_aux = req.params.senha;
         let isValid = false;
-        usuarioSchema_1.default.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-            console.log(res.get('senha'));
-            let senha = res.get('senha');
-            isValid = bcrypt.compareSync(senha_aux, senha);
-            console.log(isValid);
-        }));
-        console.log('Entrou e deu -> ' + isValid);
-        return isValid;
+        /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+              console.log(res.get('senha'));
+              let senha =  res.get('senha');
+              isValid = bcrypt.compareSync(senha_aux, senha);
+              console.log(isValid);
+        }));*/
+        console.log(req.params.login);
+        console.log(req.params.senha);
+        console.log(req.body);
+        //console.log('Entrou e deu -> ' + isValid);
+        //return isValid;
     }
 }
 const usuarioController = new UsuarioController();
