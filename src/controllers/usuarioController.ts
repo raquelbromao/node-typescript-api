@@ -121,6 +121,9 @@ class UsuarioController {
     let isValid: boolean = false;
 
     usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+        if (err) {
+          console.log(err);
+        }
         console.log(res.get('senha'));
         let senha =  res.get('senha');
         isValid = bcrypt.compareSync(senha_aux, senha);
