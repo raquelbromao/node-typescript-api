@@ -105,14 +105,12 @@ class UsuarioController {
         const senha_aux = req.params.senha;
         let isValid = false;
         usuarioSchema_1.default.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-            if (err) {
-                console.log(err);
-            }
             console.log(res.get('senha'));
             let senha = res.get('senha');
             isValid = bcrypt.compareSync(senha_aux, senha);
             console.log(isValid);
         }));
+        console.log('Entrou e deu -> ' + isValid);
         return isValid;
     }
 }
