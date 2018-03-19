@@ -112,11 +112,12 @@ class UsuarioController {
         }));*/
         console.log(req.params.login);
         console.log(req.params.senha);
+        console.log(req.params);
         //console.log(req.body);
         //res.json(req.body);
         //console.log('Entrou e deu -> ' + isValid);
         //return isValid;
-        res.json(req.params);
+        //res.json(req.params);
         return 'retorno teste';
     }
 }
