@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 //import * as debug from 'debug';
 const Database_1 = require("./config/Database");
 //import * as usuarioRepositorio from "./repositories/usuarioRepositorio";
@@ -14,6 +15,8 @@ class App {
         this.api = express();
         //  Cria o middleware
         this.middleware();
+        //  Habilita as configurações do cors
+        this.enableCors();
         //  Cria as rotas
         this.routes();
         //  Cria o BD
@@ -27,6 +30,16 @@ class App {
         this.api.use(bodyParser.urlencoded({ extended: false }));
         //this.api.use(debug);
     }
+    enableCors() {
+        const options = {
+            allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+            credentials: true,
+            methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+            origin: "*",
+            preflightContinue: false
+        };
+        this.api.use(cors(options));
+    }
     routes() {
         let router;
         router = express.Router();
@@ -37,13 +50,6 @@ class App {
         this.database = new Database_1.default();
         this.databaseConnection();
     }
-    //  Habilita cors
-    /*enableCors() {
-        const configureOption: cors.CorsOptions =  {
-            allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"];
-            methods: ['GET', 'POST','PUT','DELETE']
-        }
-    }*/
     //  Cria conexão com o banco de dados
     databaseConnection() {
         this.database.createConnection();

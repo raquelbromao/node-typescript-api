@@ -102,26 +102,32 @@ class UsuarioController {
         const login_aux = req.params.login;
         const senha_aux = req.params.senha;
         let isValid = false;
-        usuarioSchema_1.default.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-            if (err) {
-                console.log('ERRO BD: ' + err);
+        /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+            if(err) {
+              console.error.bind(console,'Error: ${err}');
+            } else {
+              //console.log(res.get('senha'));
+              let senha =  res.get('senha');
+              isValid = bcrypt.compareSync(senha_aux, senha);
+              console.log('A senha informada é válida? -> ' + isValid);
             }
-            else {
-                //console.log(res.get('senha'));
-                let senha = res.get('senha');
-                isValid = bcrypt.compareSync(senha_aux, senha);
-                console.log('A senha informada é válida? -> ' + isValid);
-            }
-        }));
+        }));*/
+        usuarioSchema_1.default
+            .findOne({ 'login': login_aux }, 'senha')
+            .then((res) => {
+            console.log(res.get('senha'));
+            let senha = res.get('senha');
+            isValid = bcrypt.compareSync(senha_aux, senha);
+            console.log('A senha informada é válida? -> ' + isValid);
+        })
+            .catch(err => {
+            const status = res.statusCode;
+            console.log('Status: ' + status + '\nErro: ' + err);
+        });
         console.log(req.params.login);
         console.log(req.params.senha);
         console.log(req.params);
-        //console.log(req.body);
-        //res.json(req.body);
-        //console.log('Entrou e deu -> ' + isValid);
-        //return isValid;
-        //res.json(req.params);
-        return;
+        res.status(200).json({ mensagem: 'teste' });
     }
 }
 const usuarioController = new UsuarioController();

@@ -19,6 +19,8 @@ class App {
         this.api = express();
         //  Cria o middleware
         this.middleware();
+        //  Habilita as configurações do cors
+        this.enableCors();
         //  Cria as rotas
         this.routes();
         //  Cria o BD
@@ -34,6 +36,17 @@ class App {
         //this.api.use(debug);
     }
 
+    enableCors() {
+        const options:  cors.CorsOptions = {
+            allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+            credentials: true,
+            methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+            origin: "*",
+            preflightContinue: false
+        };
+        this.api.use(cors(options));
+    }
+
     routes(): void {
         let router: express.Router;
         router = express.Router();
@@ -46,14 +59,6 @@ class App {
         this.database = new Database();
         this.databaseConnection();
     }
-
-    //  Habilita cors
-    /*enableCors() {
-        const configureOption: cors.CorsOptions =  {
-            allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"];
-            methods: ['GET', 'POST','PUT','DELETE']
-        }
-    }*/
 
     //  Cria conexão com o banco de dados
     databaseConnection() {

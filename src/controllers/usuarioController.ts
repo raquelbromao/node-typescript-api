@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import * as mongoose from "mongoose";
 import bcrypt = require("bcrypt");
+import * as httpStatus from 'http-status';
 import usuarioSchema from "../schemas/usuarioSchema";
 
 class UsuarioController {
@@ -111,32 +112,39 @@ class UsuarioController {
       });
   }
 
-  public validateToken(req: Request, res: Response): void {
+  public validateToken(req: Request, res: Response) {
     const login_aux: string = req.params.login;
     const senha_aux: string = req.params.senha;
     let isValid: boolean = false;
 
-    usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
+    /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
         if(err) {
-          console.log('ERRO BD: '+err);
+          console.error.bind(console,'Error: ${err}');
         } else {
           //console.log(res.get('senha'));
           let senha =  res.get('senha');
           isValid = bcrypt.compareSync(senha_aux, senha);
           console.log('A senha informada é válida? -> ' + isValid);
         }  
-    }));
+    }));*/
+    usuarioSchema
+      .findOne({'login': login_aux}, 'senha')
+      .then((res) => {
+        console.log(res.get('senha'));
+        let senha =  res.get('senha');
+        isValid = bcrypt.compareSync(senha_aux, senha);
+        console.log('A senha informada é válida? -> ' + isValid);
+      })
+      .catch(err => {
+        const status = res.statusCode;
+        console.log('Status: ' + status + '\nErro: ' + err);
+      })
 
     console.log(req.params.login);
     console.log(req.params.senha);
     console.log(req.params);
-    //console.log(req.body);
-    //res.json(req.body);
-    //console.log('Entrou e deu -> ' + isValid);
-    //return isValid;
 
-    //res.json(req.params);
-    return;
+    res.status(200).json({mensagem: 'teste'});
   }
 }
 
