@@ -114,14 +114,15 @@ class UsuarioController {
 
   public validateToken(req: Request, res: Response) {
     const corpo: string = req.body;
-    const login = req.body.login;
-    const senha = req.body.senha;
+    const login_aux = req.body.email;
+    const senha_aux = req.body.senha;
     console.log(req.body);
     console.log(corpo);
-    console.log(req.body.senha);
-    console.log(req.body.login);
-    /*const login_aux: string = req.params.login;
-    const senha_aux: string = req.params.senha;
+    console.log(login_aux);
+    console.log(senha_aux);
+
+    //const login_aux: string = req.params.login;
+    //onst senha_aux: string = req.params.senha;
     let isValid: boolean = false;
 
     
@@ -141,7 +142,7 @@ class UsuarioController {
 
     console.log(req.params.login);
     console.log(req.params.senha);
-    console.log(req.params);*/
+    console.log(req.params);
 
     res.status(200).json({mensagem: 'teste'});
   }
