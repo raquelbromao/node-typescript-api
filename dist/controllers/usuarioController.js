@@ -102,16 +102,6 @@ class UsuarioController {
         const login_aux = req.params.login;
         const senha_aux = req.params.senha;
         let isValid = false;
-        /*usuarioSchema.findOne({ 'login': login_aux }, 'senha', ((err, res) => {
-            if(err) {
-              console.error.bind(console,'Error: ${err}');
-            } else {
-              //console.log(res.get('senha'));
-              let senha =  res.get('senha');
-              isValid = bcrypt.compareSync(senha_aux, senha);
-              console.log('A senha informada é válida? -> ' + isValid);
-            }
-        }));*/
         usuarioSchema_1.default
             .findOne({ 'login': login_aux }, 'senha')
             .then((res) => {
@@ -123,11 +113,15 @@ class UsuarioController {
             .catch(err => {
             const status = res.statusCode;
             console.log('Status: ' + status + '\nErro: ' + err);
+            res.status(404).send(err);
         });
         console.log(req.params.login);
         console.log(req.params.senha);
         console.log(req.params);
         res.status(200).json({ mensagem: 'teste' });
+    }
+    enviarDados(req, res) {
+        res.json({ mensagem: 'deu certo' });
     }
 }
 const usuarioController = new UsuarioController();

@@ -16,7 +16,8 @@ class UsuarioRouter {
         this.router.put('/:login', usuarioController_1.default.updateUsuario); //  Rota para atualizar dados do usuário no BD
         this.router.delete('/:login', usuarioController_1.default.deleteUsuario); //  Rota para deletar usuário do BD
         //this.router.get('/login/:login&&:senha', usuarioController.validateToken); //  Valida token do usuário no login
-        this.router.post('/login/:login?:senha', usuarioController_1.default.validateToken); //  Valida token do usuário no login
+        this.router.post('/login/:login/:senha', usuarioController_1.default.validateToken); //  Valida token do usuário no login
+        this.router.post('/teste/:teste', usuarioController_1.default.enviarDados);
     }
 }
 //  Exportação

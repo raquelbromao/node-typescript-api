@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 //import * as debug from 'debug';
 const Database_1 = require("./config/Database");
-//import * as usuarioRepositorio from "./repositories/usuarioRepositorio";
 const Routes_1 = require("./routes/Routes");
 //  CLASSE QUE GERA O APP
 class App {
@@ -21,11 +21,9 @@ class App {
         this.routes();
         //  Cria o BD
         this.db();
-        //this.mountRoutes();
-        //  Habilita o cors
-        //this.enableCors();
     }
     middleware() {
+        this.api.use(morgan('dev'));
         this.api.use(bodyParser.json());
         this.api.use(bodyParser.urlencoded({ extended: false }));
         //this.api.use(debug);

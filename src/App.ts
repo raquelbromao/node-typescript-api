@@ -2,10 +2,10 @@ import * as express from 'express'
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as morgan from 'morgan';
 //import * as debug from 'debug';
 import Database from "./config/Database";
 import * as Route from "./routes/Routes";
-//import * as usuarioRepositorio from "./repositories/usuarioRepositorio";
 import UsuarioRouter from "./routes/Routes";
 
 //  CLASSE QUE GERA O APP
@@ -25,12 +25,10 @@ class App {
         this.routes();
         //  Cria o BD
         this.db();
-        //this.mountRoutes();
-        //  Habilita o cors
-        //this.enableCors();
     }
 
     private middleware(): void {
+        this.api.use(morgan('dev'));
         this.api.use(bodyParser.json());
         this.api.use(bodyParser.urlencoded({ extended: false}));
         //this.api.use(debug);
