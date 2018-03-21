@@ -99,25 +99,29 @@ class UsuarioController {
         });
     }
     validateToken(req, res) {
-        const login_aux = req.params.login;
-        const senha_aux = req.params.senha;
-        let isValid = false;
-        usuarioSchema_1.default
-            .findOne({ 'login': login_aux }, 'senha')
-            .then((res) => {
+        console.log(req);
+        /*const login_aux: string = req.params.login;
+        const senha_aux: string = req.params.senha;
+        let isValid: boolean = false;
+    
+        
+        usuarioSchema
+          .findOne({'login': login_aux}, 'senha')
+          .then((res) => {
             console.log(res.get('senha'));
-            let senha = res.get('senha');
+            let senha =  res.get('senha');
             isValid = bcrypt.compareSync(senha_aux, senha);
             console.log('A senha informada é válida? -> ' + isValid);
-        })
-            .catch(err => {
+          })
+          .catch(err => {
             const status = res.statusCode;
             console.log('Status: ' + status + '\nErro: ' + err);
             res.status(404).send(err);
-        });
+          })
+    
         console.log(req.params.login);
         console.log(req.params.senha);
-        console.log(req.params);
+        console.log(req.params);*/
         res.status(200).json({ mensagem: 'teste' });
     }
     enviarDados(req, res) {
