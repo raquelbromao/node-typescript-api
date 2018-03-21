@@ -99,7 +99,7 @@ class UsuarioController {
         });
     }
     validateToken(req, res) {
-        console.log(req.body);
+        console.log(req);
         /*const login_aux: string = req.params.login;
         const senha_aux: string = req.params.senha;
         let isValid: boolean = false;
