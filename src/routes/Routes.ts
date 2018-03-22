@@ -21,9 +21,8 @@ class UsuarioRouter {
     this.router.post('/', usuarioController.createUsuario);  //  Rota para criar usuário e inserir no BD
     this.router.put('/:login', usuarioController.updateUsuario); //  Rota para atualizar dados do usuário no BD
     this.router.delete('/:login', usuarioController.deleteUsuario);  //  Rota para deletar usuário do BD
-    //this.router.get('/login/:login&&:senha', usuarioController.validateToken); //  Valida token do usuário no login
     this.router.post('/login', usuarioController.validateToken); //  Valida token do usuário no login
-    this.router.post('/teste/:teste', usuarioController.enviarDados);
+    this.router.post('/receberDados', usuarioController.receberDados); //  Rota para receber e tratar JSON do SQLServer
   }
 }
 

@@ -1,8 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
 import * as mongoose from "mongoose";
 import bcrypt = require("bcrypt");
-import * as httpStatus from 'http-status';
+import * as httpStatus from "http-status";
+import * as async from "async";
 import usuarioSchema from "../schemas/usuarioSchema";
+import produtoSchema from "../schemas/produtoSchema";
 
 class UsuarioController {
   constructor() {}
@@ -27,7 +29,7 @@ class UsuarioController {
 
   /**
    * Função que realiza o cadastro de um novo usuário no BD
-   * @param req parâmetros do usuário
+   * @param req 
    * @param res
    */
   public createUsuario(req: Request, res: Response): void {
@@ -113,44 +115,123 @@ class UsuarioController {
   }
 
   public validateToken(req: Request, res: Response) {
-    const corpo: string = req.body;
     const login_aux = req.body.email;
     const senha_aux = req.body.senha;
-    console.log(req.body);
-    console.log(corpo);
-    console.log(login_aux);
-    console.log(senha_aux);
-
-    //const login_aux: string = req.params.login;
-    //onst senha_aux: string = req.params.senha;
     let isValid: boolean = false;
 
-    
     usuarioSchema
-      .findOne({'login': login_aux}, 'senha')
-      .then((res) => {
-        console.log(res.get('senha'));
-        let senha =  res.get('senha');
+      .findOne({ login: login_aux }, "senha")
+      .then(res => {
+        //console.log(res.get('senha'));
+        let senha = res.get("senha");
         isValid = bcrypt.compareSync(senha_aux, senha);
-        console.log('A senha informada é válida? -> ' + isValid);
+        console.log("A senha informada é válida? -> " + isValid);
       })
       .catch(err => {
         const status = res.statusCode;
-        console.log('Status: ' + status + '\nErro: ' + err);
+        console.log("Status: " + status + "\nErro: " + err);
         res.status(404).send(err);
-      })
+      });
 
     console.log(req.params.login);
     console.log(req.params.senha);
     console.log(req.params);
 
-    res.status(200).json({mensagem: 'teste'});
+    res.status(200).json({ mensagem: "login liberado" });
   }
 
-  public enviarDados(req: Request, res: Response) {
-    res.json({mensagem: 'deu certo'});
+  /*public receberDados2(req: Request, res: Response) {
+    var dadosJson = req.body;
+
+    for (const dado in dadosJson) {
+      let usuario = dadosJson[dado];
+      let nome = usuario.nome;
+      let login = usuario.login;
+
+      //  Faz a criptografia da senha para ser salva no BD
+      let senha_descriptografada = usuario.senha;
+      let senha_criptografada = bcrypt.hashSync(senha_descriptografada, 10);
+      let eValido: boolean = bcrypt.compareSync(
+        senha_descriptografada,
+        senha_criptografada
+      );
+      eValido
+        ? console.log("criptografia bateu, liberado acesso")
+        : console.log("criptografia não bateu, não está liberado acesso");
+      let senha = senha_criptografada;
+
+      const usuarioNovo = new usuarioSchema({
+        nome,
+        login,
+        senha
+      });
+
+      usuarioNovo
+        .save()
+        .then(data => {
+          console.log("Novo usuário cadastrado com sucesso! -> " + data);
+        })
+        .catch(err => {
+          console.log("Erro ao salvar usuario no BD -> " + err);
+        });
+    }
+
+    res
+      .status(200)
+      .json({
+        mensagem:
+          "todos os objetos do JSON enviados foram cadastrados, conferir BD!"
+      });
+  }*/
+
+  public receberDados(req: Request, res: Response) {
+    //  Faz análise dos usuários contidos no json
+    let usuariosJson = req.body.usuarios;
+    for (const item in usuariosJson) {
+
+      // FAZ A CRIPTOGRAFIA DA SENHA
+      let senha_descriptografada = usuariosJson[item].senha;
+      let senha_criptografada = bcrypt.hashSync(senha_descriptografada,10);
+      console.log(senha_criptografada);
+      usuariosJson[item].senha = senha_criptografada;
+
+      const usuarioNovo = new usuarioSchema(usuariosJson[item]);
+
+      usuarioNovo
+        .save()
+        .then(data => {
+          console.log('Novo usuário cadastrado com sucesso! -> ' + data);
+        })
+        .catch(err => {
+          console.log('Erro ao salvar usuario no BD -> ' + err);
+        })
+    }
+
+    console.log("---------------------------");
+
+    //  Faz análise dos produtos contidos no json
+    let produtosJson = req.body.produtos;
+      for (const item in produtosJson) {
+        console.log(produtosJson[item]);
+        let produto = produtosJson[item];
+        console.log(produto);
+
+        let produtoNovo = new produtoSchema(produto);
+
+        produtoNovo
+          .save()
+          .then(data => {
+            console.log("Novo produto cadastrado com sucesso! -> " + data);
+          })
+          .catch(err => {
+            console.log("Erro ao salvar produtoo no BD -> " + err);
+          });
+
+        console.log("---------------------------");
+      }
+
+    res.status(200).json({ mensagem: "200.OK" });
   }
-  
 }
 
 const usuarioController = new UsuarioController();
