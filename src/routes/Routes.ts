@@ -1,7 +1,5 @@
-import { Router, Request, Response, NextFunction }  from 'express';
-import * as mongoose from 'mongoose';
+import { Router }  from 'express';
 import bcrypt = require('bcrypt');
-import usuarioSchema from '../schemas/usuarioSchema';
 import usuarioController from '../controllers/usuarioController';
 
 class UsuarioRouter {
@@ -23,6 +21,8 @@ class UsuarioRouter {
     this.router.delete('/:login', usuarioController.deleteUsuario);  //  Rota para deletar usuário do BD
     this.router.post('/login', usuarioController.validateToken); //  Valida token do usuário no login
     this.router.post('/receberDados', usuarioController.receberDados); //  Rota para receber e tratar JSON do SQLServer
+    this.router.get('/enviarDados', usuarioController.enviarDados);
+    this.router.get('/teste/auth', usuarioController.testarToken); // Testa o uso de token em rotas -> funcionou
   }
 }
 
@@ -30,3 +30,4 @@ class UsuarioRouter {
 const usuarioRoutes = new UsuarioRouter();
 usuarioRoutes.routes();
 export default usuarioRoutes.router;
+

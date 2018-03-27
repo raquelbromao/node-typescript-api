@@ -24,7 +24,7 @@ class UsuarioController {
     }
     /**
      * Função que realiza o cadastro de um novo usuário no BD
-     * @param req parâmetros do usuário
+     * @param req
      * @param res
      */
     createUsuario(req, res) {
@@ -99,71 +99,66 @@ class UsuarioController {
             res.json({ status, err });
         });
     }
+    /**
+     * Função que valida o login
+     *
+     * @param req
+     * @param res
+     */
     validateToken(req, res) {
         const login_aux = req.body.email;
         const senha_aux = req.body.senha;
-        let isValid = false;
+        let eValida = false;
         usuarioSchema_1.default
             .findOne({ login: login_aux }, "senha")
             .then(res => {
             //console.log(res.get('senha'));
             let senha = res.get("senha");
-            isValid = bcrypt.compareSync(senha_aux, senha);
-            console.log("A senha informada é válida? -> " + isValid);
+            eValida = bcrypt.compareSync(senha_aux, senha);
+            console.log("A senha informada é válida? -> " + eValida);
         })
             .catch(err => {
             const status = res.statusCode;
             console.log("Status: " + status + "\nErro: " + err);
             res.status(404).send(err);
         });
-        console.log(req.params.login);
-        console.log(req.params.senha);
-        console.log(req.params);
-        res.status(200).json({ mensagem: "login liberado" });
+        //console.log(req.params.login);
+        //console.log(req.params.senha);
+        //console.log(req.params);
+        (eValida) ? res.status(200).json({ mensagem: "login liberado" }) :
+            res.status(404).json({ mensagem: "ERRO" });
     }
-    /*public receberDados2(req: Request, res: Response) {
-      var dadosJson = req.body;
-  
-      for (const dado in dadosJson) {
-        let usuario = dadosJson[dado];
-        let nome = usuario.nome;
-        let login = usuario.login;
-  
-        //  Faz a criptografia da senha para ser salva no BD
-        let senha_descriptografada = usuario.senha;
-        let senha_criptografada = bcrypt.hashSync(senha_descriptografada, 10);
-        let eValido: boolean = bcrypt.compareSync(
-          senha_descriptografada,
-          senha_criptografada
-        );
-        eValido
-          ? console.log("criptografia bateu, liberado acesso")
-          : console.log("criptografia não bateu, não está liberado acesso");
-        let senha = senha_criptografada;
-  
-        const usuarioNovo = new usuarioSchema({
-          nome,
-          login,
-          senha
+    testarToken(req, res) {
+        res.status(200).json({ mensagem: "Acesso Autorizado" });
+    }
+    testarRecuperacaoDeUsuario(req, res) {
+        // Recebe a ID do usuário e faz a procura
+        var usuario_senha = null;
+        usuarioSchema_1.default.findById(req.params.id)
+            .then(usuario => {
+            if (usuario) {
+                usuario_senha = usuario.get("senha");
+                //JSON.parse(usuario_aux);
+                console.log(usuario.get("senha"));
+                console.log(usuario.get("nome"));
+            }
+            else {
+                res.sendStatus(401);
+            }
+        })
+            .catch(err => {
+            console.log(err);
+            res.sendStatus(404);
         });
-  
-        usuarioNovo
-          .save()
-          .then(data => {
-            console.log("Novo usuário cadastrado com sucesso! -> " + data);
-          })
-          .catch(err => {
-            console.log("Erro ao salvar usuario no BD -> " + err);
-          });
-      }
-  
-      res
-        .status(200)
-        .json({
-          mensagem:
-            "todos os objetos do JSON enviados foram cadastrados, conferir BD!"
-        });
-    }*/
+        //console.log(usuario_senha);
+        res.sendStatus(200);
+    }
+    /**
+     * Função para receber os dados do SQLServer
+     *
+     * @param req
+     * @param res
+     */
     receberDados(req, res) {
         //  Faz análise dos usuários contidos no json
         let usuariosJson = req.body.usuarios;
@@ -201,7 +196,37 @@ class UsuarioController {
             });
             console.log("---------------------------");
         }
-        res.status(200).json({ mensagem: "200.OK" });
+        res.sendStatus(200);
+    }
+    /**
+     * Função que envia os dados do BD para o APP, quando este último requisitar
+     * Enviado em formato JSON
+     *
+     * @param req
+     * @param res
+     */
+    enviarDados(req, res) {
+        usuarioSchema_1.default.find({}, '_id nome login')
+            .then(usuarios => {
+            produtoSchema_1.default.find({}, 'nome codigo estoque')
+                .then(produtos => {
+                return res.status(200).end(JSON.stringify(usuarios));
+            })
+                .catch(err => {
+                return res.status(404).json(err);
+            });
+            //res.status(200).end(JSON.stringify(usuarios));
+        })
+            .catch(err => {
+            return res.status(404).json(err);
+        });
+        /*produtoSchema.find({}, 'nome codigo estoque')
+          .then(produtos => {
+            res.status(200).end(JSON.stringify(produtos));
+          })
+          .catch(err => {
+            return res.status(404).json(err);
+          });*/
     }
 }
 const usuarioController = new UsuarioController();

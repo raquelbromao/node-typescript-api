@@ -1,0 +1,38 @@
+{
+	"usuarios": [
+			{     
+				"nome": "Raquel Romao",
+			    "login": "raquel.romao@datacamp.net.br",
+			    "senha": "123456"
+			},
+			{
+			    "nome": "William Santos",
+			    "login": "william.santos@datacamp.net.br",
+			    "senha": "1234567"
+			},
+			{
+			    "nome": "Caio Amaral",
+			    "login": "caio.amaral@datacamp.net.br",
+			    "senha": "12345678"
+			}
+	] ,
+	
+	"produtos": [
+		{
+			"nome": "vassoura",
+			"codigo": "DB001",
+			"estoque": 4,
+			"tags": {
+				"tag1": "limpeza",
+				"tag2": "domestico",
+				"tag3": "casa"
+			}
+		},
+		{
+			"nome": "rodo",
+			"codigo": "DB034",
+			"estoque": 19,
+			"tags": null
+		}
+	]
+}

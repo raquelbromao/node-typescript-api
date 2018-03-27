@@ -4,9 +4,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-//import * as debug from 'debug';
 const Database_1 = require("./config/Database");
 const Routes_1 = require("./routes/Routes");
+const authRoutes_1 = require("./routes/authRoutes");
+const auth_1 = require("./auth");
 //  CLASSE QUE GERA O APP
 class App {
     //  Constrói os módulos usados pelo app
@@ -42,7 +43,8 @@ class App {
         let router;
         router = express.Router();
         this.api.use('/', router);
-        this.api.use('/api/v1/usuarios', Routes_1.default);
+        this.api.use('/api/v1/usuarios', auth_1.default.authenticate(), Routes_1.default);
+        this.api.use('/api/v1/auth', authRoutes_1.default);
     }
     db() {
         this.database = new Database_1.default();

@@ -3,10 +3,11 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as morgan from 'morgan';
-//import * as debug from 'debug';
 import Database from "./config/Database";
 import * as Route from "./routes/Routes";
-import UsuarioRouter from "./routes/Routes";
+import usuarioRouter from "./routes/Routes";
+import authRouter from "./routes/authRoutes";
+import Auth, {default as auth} from "./auth"
 
 //  CLASSE QUE GERA O APP
 class App {
@@ -50,7 +51,8 @@ class App {
         router = express.Router();
 
         this.api.use('/', router);
-        this.api.use('/api/v1/usuarios', UsuarioRouter);
+        this.api.use('/api/v1/usuarios', auth.authenticate(), usuarioRouter);
+        this.api.use('/api/v1/auth', authRouter)
     }
 
     db() {
