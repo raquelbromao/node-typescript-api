@@ -31,7 +31,6 @@ class AuthController {
             console.log(response);
             res.status(200).json(response);
           } else {
-            //console.log('Bcrypt não bateu com a senha informada');
             res.sendStatus(401);
           }
         } else {

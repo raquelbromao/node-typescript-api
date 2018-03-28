@@ -21,8 +21,8 @@ class UsuarioRouter {
     this.router.delete('/:login', usuarioController.deleteUsuario);  //  Rota para deletar usuário do BD
     this.router.post('/login', usuarioController.validateToken); //  Valida token do usuário no login
     this.router.post('/receberDados', usuarioController.receberDados); //  Rota para receber e tratar JSON do SQLServer
-    this.router.get('/enviarDados', usuarioController.enviarDados);
-    this.router.get('/teste/auth', usuarioController.testarToken); // Testa o uso de token em rotas -> funcionou
+    this.router.get('/enviarDados', usuarioController.enviarDados); //  Rota que envia os dados solicitados pelo cliente (APP)
+    //this.router.get('/teste/auth', usuarioController.testarToken); // Testa o uso de token em rotas -> funcionou
   }
 }
 
