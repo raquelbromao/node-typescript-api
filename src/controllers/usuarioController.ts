@@ -236,12 +236,12 @@ class UsuarioController {
    * @param res 
    */
   public enviarDados(req: Request, res: Response) {
-    usuarioSchema.find({}, '_id nome login')
+    /*usuarioSchema.find({}, '_id nome login')
       .then(usuarios => {
 
         produtoSchema.find({}, 'nome codigo estoque')  
           .then(produtos => {
-            return res.status(200).end(JSON.stringify(usuarios));
+            return res.status(200).end(JSON.stringify());
           })
           .catch(err => {
             return res.status(404).json(err);
@@ -251,15 +251,15 @@ class UsuarioController {
       })
       .catch(err => {
         return res.status(404).json(err);
-      });
+      });*/
 
-    /*produtoSchema.find({}, 'nome codigo estoque')  
+    produtoSchema.find({}, 'nome codigo estoque')  
       .then(produtos => {
         res.status(200).end(JSON.stringify(produtos));
       })
       .catch(err => {
         return res.status(404).json(err);
-      });*/
+      });
   }
 
 }

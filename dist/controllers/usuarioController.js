@@ -206,27 +206,29 @@ class UsuarioController {
      * @param res
      */
     enviarDados(req, res) {
-        usuarioSchema_1.default.find({}, '_id nome login')
-            .then(usuarios => {
-            produtoSchema_1.default.find({}, 'nome codigo estoque')
-                .then(produtos => {
-                return res.status(200).end(JSON.stringify(usuarios));
-            })
-                .catch(err => {
+        /*usuarioSchema.find({}, '_id nome login')
+          .then(usuarios => {
+    
+            produtoSchema.find({}, 'nome codigo estoque')
+              .then(produtos => {
+                return res.status(200).end(JSON.stringify());
+              })
+              .catch(err => {
                 return res.status(404).json(err);
-            });
+              });
+    
             //res.status(200).end(JSON.stringify(usuarios));
-        })
-            .catch(err => {
-            return res.status(404).json(err);
-        });
-        /*produtoSchema.find({}, 'nome codigo estoque')
-          .then(produtos => {
-            res.status(200).end(JSON.stringify(produtos));
           })
           .catch(err => {
             return res.status(404).json(err);
           });*/
+        produtoSchema_1.default.find({}, 'nome codigo estoque')
+            .then(produtos => {
+            res.status(200).end(JSON.stringify(produtos));
+        })
+            .catch(err => {
+            return res.status(404).json(err);
+        });
     }
 }
 const usuarioController = new UsuarioController();

@@ -18,10 +18,9 @@ class AuthController {
                     };
                     var token = jwt.encode(payload, 'MyS3cr3tK3Y');
                     let response = {
-                        usuario: usuario,
                         token: token
                     };
-                    //console.log(response);
+                    console.log(response);
                     res.status(200).json(response);
                 }
                 else {
