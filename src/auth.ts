@@ -11,11 +11,11 @@ class Auth {
 
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+            jwtFromRequest: ExtractJwt.fromHeader('token')
         };
 
         let strategy = new Strategy (params, function (payload, done) {
-           // console.log('PARAMS: \n' + params + '\n-------------------------------------');
+            console.log('PARAMS: \n' + params + '\n-------------------------------------');
             //console.log('\nPayload -> ' + payload + '\n-------------------------------------');
             //console.log('\n Done ->' + done + '\n-------------------------------------');
 
