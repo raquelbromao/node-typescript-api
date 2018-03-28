@@ -9,7 +9,7 @@ class Auth {
         console.log('Entrou no construtor do Auth');
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromHeader('token')
+            jwtFromRequest: ExtractJwt.fromHeader('X-Access-Token')
         };
         let strategy = new Strategy(params, function (payload, done) {
             // console.log('PARAMS: \n' + params + '\n-------------------------------------');
