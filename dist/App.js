@@ -34,7 +34,7 @@ class App {
             allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "token"],
             credentials: true,
             methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-            origin: "**",
+            origin: "*",
             preflightContinue: false
         };
         this.api.use(cors(options));
