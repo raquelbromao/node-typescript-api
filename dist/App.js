@@ -17,7 +17,7 @@ class App {
         //  Cria o middleware
         this.middleware();
         //  Habilita as configurações do cors
-        //this.enableCors();
+        this.enableCors();
         //  Cria as rotas
         this.routes();
         //  Cria o BD
@@ -27,7 +27,7 @@ class App {
         this.api.use(morgan('dev'));
         this.api.use(bodyParser.json());
         this.api.use(bodyParser.urlencoded({ extended: false }));
-        // this.api.use(Auth.initialize());
+        this.api.use(auth_1.default.initialize());
     }
     enableCors() {
         const options = {
