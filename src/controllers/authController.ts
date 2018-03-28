@@ -11,8 +11,8 @@ class AuthController {
     const login = req.body.login;
     const senha = req.body.senha;
 
-    console.log(JSON.stringify(req.headers));
-    console.log(req.headers);
+    console.log(JSON.stringify(req.header));
+    //console.log(req.headers);
     //console.log(req);
 
     usuarioSchema.findOne({login: req.body.login})
