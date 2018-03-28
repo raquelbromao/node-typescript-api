@@ -7,11 +7,11 @@ class Auth {
 
     constructor() {
 
-        console.log('Entrou no construtor do Auth');
+        //console.log('Entrou no construtor do Auth');
 
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromHeader('X-Access-Token')
+            jwtFromRequest: ExtractJwt.fromHeader("Authorization")
         };
 
         let strategy = new Strategy (params, function (payload, done) {
