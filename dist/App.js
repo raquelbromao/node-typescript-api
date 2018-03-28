@@ -27,7 +27,7 @@ class App {
         this.api.use(morgan('dev'));
         this.api.use(bodyParser.json());
         this.api.use(bodyParser.urlencoded({ extended: false }));
-        this.api.use(auth_1.default.initialize());
+        // this.api.use(Auth.initialize());
     }
     enableCors() {
         const options = {

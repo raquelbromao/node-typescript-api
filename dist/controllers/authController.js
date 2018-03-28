@@ -8,7 +8,7 @@ class AuthController {
     auth(req, res) {
         const login = req.body.login;
         const senha = req.body.senha;
-        //console.log('Parametros enviados ao auth:\nLogin: ' + login + '\nSenha: ' + senha);
+        console.log(req.header);
         usuarioSchema_1.default.findOne({ login: req.body.login })
             .then(usuario => {
             if (usuario) {

@@ -236,7 +236,7 @@ class UsuarioController {
    * @param res 
    */
   public enviarDados(req: Request, res: Response) {
-    console.log(JSON.stringify(req.headers));
+    console.log(req.headers);
     /*usuarioSchema.find({}, '_id nome login')
       .then(usuarios => {
 
