@@ -8,8 +8,8 @@ class AuthController {
     auth(req, res) {
         const login = req.body.login;
         const senha = req.body.senha;
-        console.log(JSON.stringify(req.headers));
-        console.log(req.headers);
+        console.log(JSON.stringify(req.header));
+        //console.log(req.headers);
         //console.log(req);
         usuarioSchema_1.default.findOne({ login: req.body.login })
             .then(usuario => {

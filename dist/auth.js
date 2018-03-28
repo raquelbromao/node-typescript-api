@@ -9,10 +9,10 @@ class Auth {
         console.log('Entrou no construtor do Auth');
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromHeader('token')
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
         };
         let strategy = new Strategy(params, function (payload, done) {
-            console.log('PARAMS: \n' + params + '\n-------------------------------------');
+            // console.log('PARAMS: \n' + params + '\n-------------------------------------');
             //console.log('\nPayload -> ' + payload + '\n-------------------------------------');
             //console.log('\n Done ->' + done + '\n-------------------------------------');
             /*const user = this.usuarioSchema.findOne({ _id: playload.id});
