@@ -27,14 +27,14 @@ class App {
         this.api.use(morgan('dev'));
         this.api.use(bodyParser.json());
         this.api.use(bodyParser.urlencoded({ extended: false }));
-        //this.api.use(debug);
+        this.api.use(auth_1.default.initialize());
     }
     enableCors() {
         const options = {
             allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "token"],
             credentials: true,
             methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-            origin: "*",
+            origin: "**",
             preflightContinue: false
         };
         this.api.use(cors(options));
