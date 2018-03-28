@@ -11,13 +11,13 @@ class Auth {
 
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromHeader("token")
+            jwtFromRequest: ExtractJwt.fromHeader('token')
         };
 
         let strategy = new Strategy (params, function (payload, done) {
-            console.log('PARAMS: \n' + params + '\n-------------------------------------');
-            console.log('\nPayload -> ' + payload + '\n-------------------------------------');
-            console.log('\n Done ->' + done + '\n-------------------------------------');
+           // console.log('PARAMS: \n' + params + '\n-------------------------------------');
+            //console.log('\nPayload -> ' + payload + '\n-------------------------------------');
+            //console.log('\n Done ->' + done + '\n-------------------------------------');
 
             /*const user = this.usuarioSchema.findOne({ _id: playload.id});
             return user? done(null, {id: user.id}) : done(new Error("Usuario não Encontrado"), null)*/
