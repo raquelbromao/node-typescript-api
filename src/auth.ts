@@ -11,7 +11,7 @@ class Auth {
 
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
-            jwtFromRequest: ExtractJwt.fromHeader('X-Access-Token')
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
         };
 
         let strategy = new Strategy (params, function (payload, done) {
