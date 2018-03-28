@@ -21,7 +21,7 @@ class App {
         //  Cria o middleware
         this.middleware();
         //  Habilita as configurações do cors
-        this.enableCors();
+        //this.enableCors();
         //  Cria as rotas
         this.routes();
         //  Cria o BD

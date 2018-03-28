@@ -207,22 +207,6 @@ class UsuarioController {
      */
     enviarDados(req, res) {
         console.log(req.headers);
-        /*usuarioSchema.find({}, '_id nome login')
-          .then(usuarios => {
-    
-            produtoSchema.find({}, 'nome codigo estoque')
-              .then(produtos => {
-                return res.status(200).end(JSON.stringify());
-              })
-              .catch(err => {
-                return res.status(404).json(err);
-              });
-    
-            //res.status(200).end(JSON.stringify(usuarios));
-          })
-          .catch(err => {
-            return res.status(404).json(err);
-          });*/
         produtoSchema_1.default.find({}, 'nome codigo estoque')
             .then(produtos => {
             res.status(200).end(JSON.stringify(produtos));
