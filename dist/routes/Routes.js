@@ -16,8 +16,11 @@ class UsuarioRouter {
         this.router.put('/:login', usuarioController_1.default.updateUsuario); //  Rota para atualizar dados do usuário no BD
         this.router.delete('/:login', usuarioController_1.default.deleteUsuario); //  Rota para deletar usuário do BD
         this.router.post('/login', usuarioController_1.default.validateToken); //  Valida token do usuário no login
-        this.router.post('/receberDados', usuarioController_1.default.receberDados); //  Rota para receber e tratar JSON do SQLServer
-        this.router.get('/enviarDados', usuarioController_1.default.enviarDados); //  Rota que envia os dados solicitados pelo cliente (APP)
+        this.router.post('/receberDados', usuarioController_1.default.receberDadosSQL); //  Rota para receber e tratar JSON do SQLServer
+        this.router.get('/enviarDados', usuarioController_1.default.testeQuerys); //  Rota que testa obtenção de dados via SQLServer
+        this.router.get('/sincronizacaoInicial', usuarioController_1.default.sincronizacaoInicial.bind(usuarioController_1.default));
+        //this.router.get('/sincronizacaoInicial/receberTabelasSQL', databaseController.receiveFromMSSQL.bind(databaseController)); // Teste de Async/Wait
+        //this.router.get('/testeAsync', usuarioController.testarComAsyncAwait.bind(usuarioController)); // Teste de Async/Wait
         //this.router.get('/teste/auth', usuarioController.testarToken); // Testa o uso de token em rotas -> funcionou
     }
 }

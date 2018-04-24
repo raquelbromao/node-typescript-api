@@ -1,9 +1,10 @@
 import * as mongoose from 'mongoose';
+import { configMongo } from "./configuracoesGlobais";
+
 
 class Database {
     //private DB_URI = 'mongodb://localhost/node-ts-api';
-    private DB_URI = 'mongodb://raquelromao:datacamp001@ds117749.mlab.com:17749/apidatacamp';
-
+    private DB_URI = configMongo.uri;
     private DB_CONNECTION;
 
     constructor() {}
@@ -15,8 +16,8 @@ class Database {
 
     logger(uri) {
         this.DB_CONNECTION = mongoose.connection;
-        this.DB_CONNECTION.on('connected', () => console.log('Mongoose está conectado em ' + uri));
-        this.DB_CONNECTION.on('error', error => console.error.bind(console, 'Erro na conexão: ${error}'));
+        this.DB_CONNECTION.on('connected', () => console.log('Mongoose está conectado' /*em ' + uri*/));
+        this.DB_CONNECTION.on('error', error => console.error.bind(console, 'Mongoose - Erro na conexão: ${error}'));
         this.DB_CONNECTION.on('disconnected', () => console.log('Mongoose desconectado em: ${uri}'));
     }
 

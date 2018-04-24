@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const authController_1 = require("../controllers/authController");
-class AuthRouter {
+const databaseController_1 = require("../controllers/databaseController");
+class DatabaseRouter {
     constructor() {
         this.router = express_1.Router();
         this.routes();
@@ -11,10 +11,10 @@ class AuthRouter {
      * Função que cria e define as rotas e suas respectivas funções no UserController
      */
     routes() {
-        this.router.post("/", authController_1.default.auth);
+        this.router.get("/receberTabelasSQL", databaseController_1.default.receiveFromMSSQLandInsertMONGO.bind(databaseController_1.default));
     }
 }
 //  Exportação
-const authRoutes = new AuthRouter();
-authRoutes.routes();
-exports.default = authRoutes.router;
+const databaseRoutes = new DatabaseRouter();
+databaseRoutes.routes();
+exports.default = databaseRoutes.router;

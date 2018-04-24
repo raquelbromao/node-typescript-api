@@ -6,8 +6,7 @@ var Strategy = require('passport-jwt').Strategy;
 class Auth {
 
     constructor() {
-
-        console.log('Entrou no construtor do Auth');
+        //console.log('Entrou no construtor do Auth');
 
         const params = {
             secretOrKey: "MyS3cr3tK3Y",
@@ -15,12 +14,6 @@ class Auth {
         };
 
         let strategy = new Strategy (params, function (payload, done) {
-           // console.log('PARAMS: \n' + params + '\n-------------------------------------');
-            //console.log('\nPayload -> ' + payload + '\n-------------------------------------');
-            //console.log('\n Done ->' + done + '\n-------------------------------------');
-
-            /*const user = this.usuarioSchema.findOne({ _id: playload.id});
-            return user? done(null, {id: user.id}) : done(new Error("Usuario não Encontrado"), null)*/
 
             usuarioSchema.findById(payload.id)
                 .then(usuario => {
@@ -36,6 +29,7 @@ class Auth {
                     console.log('Usuário não encontrado');
                     return done(new Error('Usuário não encontrado'), null);
                 });
+
         });
 
         passport.use(strategy);

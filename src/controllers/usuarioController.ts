@@ -1,9 +1,13 @@
 import { Router, Request, Response, NextFunction } from "express";
 import bcrypt = require("bcrypt");
 import * as mongoose from "mongoose";
+import sqlDatabase from '../config/sqlDatabase'
 import * as httpStatus from "http-status";
 import usuarioSchema from "../schemas/usuarioSchema";
-import produtoSchema from "../schemas/produtoSchema";
+import PRODUTOS from "../schemas/produtoSchema";
+import DEPARTAMENTO from "../schemas/departamentoSchema";
+import VENDEDOR from "../schemas/vendedorSchema";
+import CLIENTE from "../schemas/clienteSchema";
 import { JsonWebTokenError } from "jsonwebtoken";
 
 class UsuarioController {
@@ -146,7 +150,7 @@ class UsuarioController {
                 res.status(404).json({ mensagem: "ERRO" });
   }
 
-  public testarToken(req: Request, res: Response) {
+  public testToken(req: Request, res: Response) {
     res.status(200).json({mensagem: "Acesso Autorizado"});
   }
 
@@ -157,7 +161,6 @@ class UsuarioController {
       .then(usuario => {
         if (usuario) {
           usuario_senha = usuario.get("senha");
-          //JSON.parse(usuario_aux);
           console.log(usuario.get("senha"));
           console.log(usuario.get("nome"));
         } else {
@@ -179,7 +182,7 @@ class UsuarioController {
    * @param req 
    * @param res 
    */
-  public receberDados(req: Request, res: Response) {
+  public receberDadosSQL (req: Request, res: Response) {
     //  Faz análise dos usuários contidos no json
     let usuariosJson = req.body.usuarios;
     for (const item in usuariosJson) {
@@ -205,7 +208,7 @@ class UsuarioController {
     console.log("---------------------------");
 
     //  Faz análise dos produtos contidos no json
-    let produtosJson = req.body.produtos;
+   /* let produtosJson = req.body.produtos;
       for (const item in produtosJson) {
         console.log(produtosJson[item]);
         let produto = produtosJson[item];
@@ -223,11 +226,11 @@ class UsuarioController {
           });
 
         console.log("---------------------------");
-      }
+      }*/
 
     res.sendStatus(200);
   }
-
+  
   /**
    * Função que envia os dados do BD para o APP, quando este último requisitar
    * Enviado em formato JSON
@@ -235,19 +238,97 @@ class UsuarioController {
    * @param req 
    * @param res 
    */
-  public enviarDados(req: Request, res: Response) {
-    console.log(req.headers);
+  public async testeQuerys (req: Request, res: Response) {
+    //let camposVendedor = 'VDD_ID, VDD_NOME, VDD_SENHA_PALM, VDD_PERC_DESC_MAX, VDD_MAX_PEDIDOS';
+    //let camposEmpresa = 'EMP_NOME, EMP_TELEFONE';
+    //let camposParams = 'PAR_PALM_BLOQ_SEM_ESTOQUE, PAR_PALM_FABRICANTE, PAR_PALM_CAMPOS_OBRIG, PAR_PALM_MULTIPLO, PAR_PALM_CONTROLE_SALDO_CLI, PAR_PALM_BLOQ_CLI_PF, PAR_PALM_BLOQ_PEDIDO_PF';
+
+    //var query = 'SELECT ' + camposEmpresa + ' FROM EMPRESAS';
+    //var query = 'SELECT ' + camposVendedor + ' FROM VENDEDOR';
+    //var query = 'SELECT ' + camposParams + ' FROM PARAMS';
+
+    var query = "SELECT PRO_NOVO = (CASE WHEN DATEDIFF(dd,PRO_DATACADASTRO,GETDATE()) <= 7 THEN 'S' ELSE 'N' END) FROM PRODUTO";
+    var query2 = "SELECT PRO_ESTOQUE, PRO_FALTA = (CASE WHEN PRO_ESTOQUE <= 0 THEN 'S' ELSE 'N' END) FROM PRODUTO";
+    var query3 = "SELECT V.PRO_PROMOCAO FROM VW_PRODUTO_EXPORT V WHERE PRODUTO.PRO_ID = VW_PRODUTO_EXPORT.PRO_ID";
+    var query4 = "SELECT PRO_PROMOCAO = (SELECT v.PRO_PROMOCAO FROM VW_PRODUTO_EXPORT v INNER JOIN PRODUTO t ON t.PRO_ID = v.PRO_ID) FROM PRODUTO";
+    var query5 = "SELECT VDD_BLOQ_PEDIDO_XDIAS = (SELECT DIAS = (case when PAR_EXP_REC_PDA = 'S' or PAR_PALM_BLOQ_RESTRITOS = 'S' then isnull(PAR_DIASDECARENCIA,0) else 0 end) FROM PARAMS) FROM VENDEDOR";
+    var query6 = "SELECT CODIGOCLIENTE, FANTASIA, RAZAOSOCIAL, ENDERECO, BAIRRO, CODIGOCIDADE, CEP, FAX, EMAIL, PESSOAFJ, CNPJCPF, INSCRICAOESTADUAL, INSCRICAOMUNICIPAL, CONTATO1, CONTATO2, TIMEHOBBY1, TIMEHOBBY2, TELEFONE1, TELEFONE2, ANIVERSARIO1, ANIVERSARIO2, VIP, LIMITECREDITO, TOTALTITULOSVENCIDOS, TOTALTITULOSAVENCER, SALDO, ENDERECOENTREGA, BAIRROENTREGA, CODIGOCIDADEENTREGA, CEPENTREGA, ENDERECOCOBRANCA, BAIRROCOBRANCA, CODIGOCIDADECOBRANCA, CEPCOBRANCA, CODIGOCATEGORIA, CODIGOATIVIDADE, CAIXAPOSTAL, HOMEPAGE, CODIGOTABELA, CODIGOCONDICAOPAGTO, CODIGOFORMAPAGTO, NUMERO, CAST('' AS VARCHAR), CAST('' AS VARCHAR) FROM VW_CLIENTE_PALM";
+    var db = new sqlDatabase();
+    db.appQuery(res, query6);
+  }
   
+  /**
+   * 
+   * @param req 
+   * @param res 
+   */
+  public async sincronizacaoInicial(req: Request, res: Response) {
+    await PRODUTOS
+      .find({})
+      .then(produtos => {
+        VENDEDOR
+          .find({})
+          .then(vendedores => {
+            CLIENTE
+            .find({})
+            .then(clientes => {
+              res.status(200).json({ produtos, vendedores, clientes });
+            })
+            .catch(err => {
+              res.status(404).json({ err });
+            });
+          })
+          .catch(err => {
+            res.status(404).json({ err });
+          });
+      })
+      .catch(err => {
+        res.status(404).json({ err });
+      });
+  }
+
+  /*public enviarDados(req: Request, res: Response) {
+    console.log(req.headers);
+    
     produtoSchema.find({}, 'nome codigo estoque')  
       .then(produtos => {
         res.status(200).end(JSON.stringify(produtos));
       })
       .catch(err => {
         return res.status(404).json(err);
-      });
+    });
+}*/
+
+  /*public fun1 () : any {
+    setTimeout(function() {
+      //return 4000;
+    }, 15000);
+    console.log('F1');
+
   }
+
+  public fun2 () : any {
+    setTimeout(() => {
+      //return 500;
+    }, 500);
+    console.log('F2');
+
+  }
+  
+  public async testarComAsyncAwait(req: Request, res: Response) {
+    await this.fun1();
+    await this.fun2();
+    console.log('pronto');
+  }
+
+  public testarSemAsyncAwait(req: Request, res: Response) {
+    let x = this.fun1();
+    let y = this.fun2();
+    console.log('pronto');
+  }*/
 
 }
 
 const usuarioController = new UsuarioController();
 export default usuarioController;
+

@@ -13,7 +13,7 @@
   },
   "keywords": [
     "nodejs",
-    "typescrip",
+    "typescript",
     "ts",
     "node",
     "js",
@@ -28,9 +28,11 @@
     "@types/http-status": "^0.2.30",
     "@types/jwt-simple": "^0.5.33",
     "@types/mongoose": "^5.0.7",
+    "@types/mssql": "^4.0.7",
     "@types/node": "^9.4.7",
     "@types/passport": "^0.4.3",
     "@types/passport-jwt": "^3.0.1",
+    "@types/pouchdb": "^6.3.2",
     "async": "^2.6.0",
     "bcrypt": "^1.0.3",
     "cors": "^2.8.4",
@@ -45,6 +47,7 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "pouchdb": "^6.4.3",
     "typescript": "^2.7.2"
   }
 }

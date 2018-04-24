@@ -1,6 +1,7 @@
-import { Schema, model } from 'mongoose';
-
-let usuarioSchema: Schema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
+let CLIENTES = new mongoose_1.Schema({
     CLI_ID: {
         type: String
     },
@@ -50,7 +51,7 @@ let usuarioSchema: Schema = new Schema({
         type: String
     },
     CLI_EMAIL: {
-        type: String    
+        type: String
     },
     CLI_ENDERECOCOBRANCA: {
         type: String
@@ -66,11 +67,9 @@ let usuarioSchema: Schema = new Schema({
     },
     CLI_ESTADOCOBRANCA: {
         type: String
-    }, 
+    },
     CLI_CREDITO: {
         type: Number,
-        
     }
 });
-
-export default model('User', usuarioSchema);
+exports.default = mongoose_1.model('CLIENTES', CLIENTES);
